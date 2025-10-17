@@ -1,18 +1,24 @@
 {
-  "name": "obsterm",
-  "module": "src/index.tsx",
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "@opentui/core": "^0.1.27",
-    "@opentui/react": "^0.1.27",
-    "obs-websocket-js": "^5.0.6",
-    "react": "^19.1.1"
-  }
+	"name": "obsterm",
+	"module": "src/index.tsx",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"lint": "biome lint --write",
+		"start": "bun run ."
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.6",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@opentui/core": "^0.1.27",
+		"@opentui/react": "^0.1.27",
+		"clipboardy": "^5.0.0",
+		"obs-websocket-js": "^5.0.6",
+		"react": "^19.1.1"
+	}
 }
