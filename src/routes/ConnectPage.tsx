@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { connectObs } from "../obs"
+import { connectObs } from "../obsws"
 import { TextAttributes } from "@opentui/core"
 import { useKeyboard } from "@opentui/react"
 import clipboard from "clipboardy"

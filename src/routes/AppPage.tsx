@@ -1,5 +1,5 @@
-import { useGetScenes, type Scene } from "../obs/use-get-scenes"
-import { closeObs } from "../obs"
+import { useGetScenes, type Scene } from "../obsws/use-get-scenes"
+import { closeObs } from "../obsws"
 import { useState, useEffect } from "react"
 import { useKeyboard } from "@opentui/react"
 import { TextAttributes } from "@opentui/core"
