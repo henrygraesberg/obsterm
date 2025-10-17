@@ -51,6 +51,9 @@ export const AppPage = () => {
 			case "down":
 				setSelectedSceneId(scenes[getNextScene(scenes, selectedSceneId)]?.sceneUuid)
 				break
+			case "return":
+				// Todo: Set scene to the selected one
+				break
 			default:
 				break
 		}
