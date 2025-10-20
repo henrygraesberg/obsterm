@@ -1,5 +1,5 @@
 import { useGetScenes, type Scene } from "../obsws/use-get-scenes"
-import { closeObs } from "../obsws"
+import { closeObs, obs } from "../obsws"
 import { useState, useEffect } from "react"
 import { useKeyboard } from "@opentui/react"
 import { TextAttributes } from "@opentui/core"
@@ -25,9 +25,9 @@ const getNextScene = (scenes: Scene[], selectedSceneId: string | undefined) => {
 }
 
 export const AppPage = () => {
-	const [selectedSceneId, setSelectedSceneId] = useState<string | undefined>("")
+	const [selectedSceneNumber, setSelectedSceneNumber] = useState<number>(1)
 
-	const { scenes, currentSceneId, refetchScenes } = useGetScenes()
+	const { scenes, currentSceneId, refetchScenes, setCurrentScene } = useGetScenes()
 
 	useEffect(() => {
 		refetchScenes()
@@ -36,23 +36,25 @@ export const AppPage = () => {
 	}, [refetchScenes])
 
 	useEffect(() => {
-		setSelectedSceneId(currentSceneId as string)
+		setSelectedSceneNumber(scenes.findIndex((scene) => scene.sceneUuid == currentSceneId))
 	}, [currentSceneId])
 
 	useKeyboard((key) => {
 		switch (key.name) {
+			case "q":
 			case "escape":
 				closeObs()
 				process.exit(0)
 				break
 			case "up":
-				setSelectedSceneId(scenes[getPrevScene(scenes, selectedSceneId)]?.sceneUuid)
+				setSelectedSceneNumber((p) => p - 1)
 				break
 			case "down":
-				setSelectedSceneId(scenes[getNextScene(scenes, selectedSceneId)]?.sceneUuid)
+				setSelectedSceneNumber((p) => p + 1)
 				break
 			case "return":
-				// Todo: Set scene to the selected one
+				obs.call("SetCurrentProgramScene", {sceneUuid: scenes[selectedSceneNumber]?.sceneUuid})
+				setCurrentScene(scenes[selectedSceneNumber]?.sceneUuid)
 				break
 			default:
 				break
@@ -63,16 +65,16 @@ export const AppPage = () => {
 		<box alignItems="center" justifyContent="center" flexGrow={1}>
 			<box justifyContent="center" alignItems="flex-end">
 				<ascii-font font="tiny" text="OBSTerm" />
-				{scenes.map((s) => (
+				{scenes.map((s, i) => (
 					<text
 						key={s.sceneUuid}
 						attributes={
-							s.sceneUuid === selectedSceneId
+							i === selectedSceneNumber
 								? TextAttributes.BOLD
 								: TextAttributes.DIM
 						}
 					>
-						{s.sceneUuid === currentSceneId ? <span attributes={TextAttributes.DIM}><strong>Active &gt;</strong> </span> : ""}{`${s.sceneIndex + 1}: ${s.sceneName}`}
+						{s.sceneUuid === currentSceneId ? <span attributes={TextAttributes.DIM}><strong>Active -&gt;</strong> </span> : ""}{`${s.sceneIndex + 1}: ${s.sceneName}`}
 					</text>
 				))}
 			</box>

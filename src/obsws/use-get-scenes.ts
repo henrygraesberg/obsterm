@@ -17,5 +17,5 @@ export const useGetScenes = () => {
 		setCurrentScene(response.currentProgramSceneUuid)
 	}, [])
 
-	return { scenes, currentSceneId, refetchScenes }
+	return { scenes, currentSceneId, refetchScenes, setCurrentScene }
 }
