@@ -6,17 +6,16 @@ import { ConnectPage } from "./routes/ConnectPage"
 function App() {
 	const [connected, setConnected] = useState<boolean>(false)
 
-	if (!connected) {
-		return (
-			<ConnectPage
-				onConnect={() => {
-					setConnected(true)
-				}}
-			/>
-		)
-	}
-
-	return <AppPage />
+	return (
+		<box alignItems="center" justifyContent="center" flexGrow={1}>
+			<ascii-font font="tiny" text="OBSTerm" />
+			{connected ? (
+				<AppPage />
+			) : (
+				<ConnectPage onConnect={() => setConnected(true)} />
+			)}
+		</box>
+	)
 }
 
 render(<App />)

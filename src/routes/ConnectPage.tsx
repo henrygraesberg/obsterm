@@ -25,14 +25,14 @@ export function ConnectPage({ onConnect }: { onConnect: () => void }) {
 	}
 
 	useKeyboard(async (key) => {
-		if((key.ctrl || key.meta) && key.name === "v") {
-      try {
-        const text = await clipboard.read();
-        if (focused === "address") setAddress((a) => a + text)
-        else setPassword((p) => p == null ? text : p + text)
-      } catch (err) {
-        setError("Pasting from clipboard failed - Please insert info manually")
-      }
+		if ((key.ctrl || key.meta) && key.name === "v") {
+			try {
+				const text = await clipboard.read()
+				if (focused === "address") setAddress((a) => a + text)
+				else setPassword((p) => (p == null ? text : p + text))
+			} catch (_err) {
+				setError("Pasting from clipboard failed - Please insert info manually")
+			}
 		}
 
 		switch (key.name) {
